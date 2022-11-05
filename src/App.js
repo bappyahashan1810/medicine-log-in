@@ -1,6 +1,6 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, sendEmailVerification, signInWithEmailAndPassword } from "firebase/auth";
 import app from './firebase.init';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form'
@@ -58,10 +58,11 @@ function App() {
           // ...
           setEmail('');
           setPassword('');
+
         })
         .catch((error) => {
           console.error(error);
-
+          verifyEmail();
 
         });
 
@@ -72,6 +73,13 @@ function App() {
 
 
 
+  }
+
+  const verifyEmail = () => {
+    sendEmailVerification(auth.currentUser)
+      .then(() => {
+        console.log('Email Verification Sent');
+      })
   }
 
   return (
